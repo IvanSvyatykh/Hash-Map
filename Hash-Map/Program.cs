@@ -5,7 +5,7 @@ class Program
 {
     public static void Main()
     {
-        ChainedHashMap<string, int> dic = new ChainedHashMap<string, int>(10, HashFunctions.HashWithDevision);
+        ChainedHashMap<string, int> dic = new ChainedHashMap<string, int>(10, HashFunctions.HashWithMultiplication);
         dic.Add("Пенсионер", 10);
         dic.Add("Пионер", 40);
         dic.Add("Курьер", 800);
