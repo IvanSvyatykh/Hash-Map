@@ -63,10 +63,7 @@ namespace Hash_Map
 
         }
 
-        public double GetKoef()
-        {
-            throw new NotImplementedException();
-        }
+        public double GetKoef() => (_values.ToList().Sum(x => x.Count) / (double)Size);
 
         public int GetShortestChain() => _values.ToList().Min(x => x.Count);
 

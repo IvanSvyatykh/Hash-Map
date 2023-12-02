@@ -18,7 +18,7 @@ class Program
 
 
 
-        int c= dic.GetLongestChain();
+        double c= dic.GetKoef();
         a = 5;
 
 
