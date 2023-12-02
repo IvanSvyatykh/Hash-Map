@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Hash_Map
+namespace Hash_Map.DataStructs
 {
     public class ChainedHashMap<TKey, TValue> : IHashMap<TKey, TValue>
     {
@@ -63,7 +63,37 @@ namespace Hash_Map
 
         }
 
-        public double GetKoef() => (_values.ToList().Sum(x => x.Count) / (double)Size);
+        public void Remove(TKey key)
+        {
+            int hash = _hashFunc(key, Size);
+            Node<TKey, TValue> node = null;
+
+            if (_values[hash].Count != 0)
+            {
+                MyLinkedList<TKey, TValue> nodes = _values[hash];
+                nodes.RemoveSameElement(key);
+
+            }
+            else
+            {
+                throw new ArgumentException($"Hash-Map does not contains element with given key {key.ToString()}");
+            }
+        }
+
+        public void Test(Dictionary<TKey, TValue> set)
+        {
+            if (set.Count > Size)
+            {
+                throw new ArgumentException($"Size of set more than Hash-Map.");
+            }
+            _values = new MyLinkedList<TKey, TValue>[Size];
+
+            foreach (var el in set)
+            {
+                this.Add(el.Key, el.Value);
+            }
+        }
+        public double GetKoef() => _values.ToList().Sum(x => x.Count) / (double)Size;
 
         public int GetShortestChain() => _values.ToList().Min(x => x.Count);
 

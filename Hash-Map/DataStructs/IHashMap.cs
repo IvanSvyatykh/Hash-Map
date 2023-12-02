@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hash_Map
+namespace Hash_Map.DataStructs
 {
     public interface IHashMap<TKey, TValue>
     {

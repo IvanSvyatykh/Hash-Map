@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hash_Map
+namespace Hash_Map.DataStructs
 {
     public class MyLinkedList<TKey, TValue> : IEnumerable<Node<TKey, TValue>>
     {
@@ -91,15 +91,16 @@ namespace Hash_Map
             return GetEnumerator();
         }
 
-        public void RemoveSameElements(Node<TKey, TValue> element)
+        public void RemoveSameElement(TKey key)
         {
             int count = 0;
 
             foreach (var el in this)
             {
-                if (Equals(el.Value, element.Value))
+                if (Equals(el.Key, key))
                 {
                     RemoveAt(count);
+                    return;
                 }
                 else
                 {
@@ -107,6 +108,8 @@ namespace Hash_Map
                 }
 
             }
+
+            throw new ArgumentException($"Element with key {key} does not implement in Hash-Map");
         }
 
         public void RemoveAt(int index)
