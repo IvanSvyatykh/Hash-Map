@@ -18,7 +18,8 @@ class Program
 
 
 
-        int c= 0;
+        int c= dic.GetShortestChain();
+        a = 5;
 
 
     }

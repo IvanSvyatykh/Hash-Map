@@ -7,12 +7,14 @@ using System.Xml.Linq;
 
 namespace Hash_Map
 {
-    public class ChainedHashMap<TKey, TValue>
+    public class ChainedHashMap<TKey, TValue> : IHashMap<TKey, TValue>
     {
         public int Size { get; private set; }
 
         private MyLinkedList<TKey, TValue>[] _values;
+
         private Func<object, int, int> _hashFunc;
+
         public ChainedHashMap(int size, Func<object, int, int> hash)
         {
             Size = size;
@@ -20,7 +22,7 @@ namespace Hash_Map
             _hashFunc = hash;
             for (int i = 0; i < size; i++)
             {
-                _values[i] = null;
+                _values[i] = new MyLinkedList<TKey, TValue>();
             }
 
         }
@@ -29,7 +31,8 @@ namespace Hash_Map
         {
             int hash = _hashFunc(key, Size);
             Node<TKey, TValue> node = null;
-            if (_values[hash] != null)
+
+            if (_values[hash].Count != 0)
             {
                 MyLinkedList<TKey, TValue> nodes = _values[hash];
                 node = nodes.Get(key);
@@ -46,7 +49,8 @@ namespace Hash_Map
         public void Add(TKey key, TValue value)
         {
             int hash = _hashFunc(key, Size);
-            if (_values[hash] == null)
+
+            if (_values[hash].Count == 0)
             {
                 MyLinkedList<TKey, TValue> nodes = new MyLinkedList<TKey, TValue>();
                 nodes.Add(key, value);
@@ -58,5 +62,15 @@ namespace Hash_Map
             }
 
         }
+
+        public double GetKoef()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetShortestChain() => _values.ToList().Min(x => x.Count);
+
+        public int GetLongestChain() => _values.ToList().Max(x => x.Count);
+
     }
 }
