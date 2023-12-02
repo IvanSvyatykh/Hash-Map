@@ -9,6 +9,33 @@ namespace Hash_Map
 {
     public static class HashFunctions
     {
+        public static int HashWithBitMovement(object data, int size)
+        {
+
+            byte[] hash = ObjectToByteArray(data);
+            List<byte> list = new List<byte>();
+            if (hash.Length < 128)
+            {
+                for (int i = 0; i < 128 - hash.Length; i++)
+                {
+                    list.Add(0);
+                }
+
+                hash.ToList().ForEach(x => list.Add(x));
+            }
+
+
+            long res = 1315423911;
+            for (int i = 0; i < list.Count; i++)
+            {
+                res ^= ((res << 5) + list[i] + (res >> 2));
+            }
+
+            res = Math.Abs(res);
+            return (int)(res % size);
+
+        }
+
         public static int HashWithMultiplication(object data, int size)
         {
             byte[] hash = ObjectToByteArray(data);
@@ -28,6 +55,8 @@ namespace Hash_Map
 
             return (int)Math.Round((double)sum * 0.6180339887 * size) % size;
         }
+
+
         public static int HashWithDevision(object data, int size)
         {
             byte[] hash = ObjectToByteArray(data);

@@ -5,7 +5,7 @@ class Program
 {
     public static void Main()
     {
-        ChainedHashMap<string, int> dic = new ChainedHashMap<string, int>(10, HashFunctions.HashWithMultiplication);
+        ChainedHashMap<string, int> dic = new ChainedHashMap<string, int>(10, HashFunctions.HashWithBitMovement);
         dic.Add("Пенсионер", 10);
         dic.Add("Пионер", 40);
         dic.Add("Курьер", 800);
@@ -18,7 +18,7 @@ class Program
 
 
 
-        int c= dic.GetShortestChain();
+        int c= dic.GetLongestChain();
         a = 5;
 
 
