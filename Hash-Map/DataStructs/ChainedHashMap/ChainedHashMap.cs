@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Hash_Map.DataStructs
+namespace Hash_Map.DataStructs.ChainedHashMap
 {
     public class ChainedHashMap<TKey, TValue> : IHashMap<TKey, TValue>
     {
@@ -36,7 +36,6 @@ namespace Hash_Map.DataStructs
             {
                 MyLinkedList<TKey, TValue> nodes = _values[hash];
                 node = nodes.Get(key);
-
             }
             if (node == null)
             {
@@ -90,7 +89,7 @@ namespace Hash_Map.DataStructs
 
             foreach (var el in set)
             {
-                this.Add(el.Key, el.Value);
+                Add(el.Key, el.Value);
             }
         }
         public double GetKoef() => _values.ToList().Sum(x => x.Count) / (double)Size;

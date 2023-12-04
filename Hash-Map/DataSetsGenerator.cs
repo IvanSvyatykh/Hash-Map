@@ -17,7 +17,7 @@ namespace Hash_Map
 
             while (visited.Count < size)
             {
-                visited.Add(random.Next(0, int.MaxValue));
+                visited.Add(random.Next(0, 10000));
             }
 
             foreach (int id in visited)

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hash_Map.DataStructs
+namespace Hash_Map.DataStructs.ChainedHashMap
 {
     public class MyLinkedList<TKey, TValue> : IEnumerable<Node<TKey, TValue>>
     {
@@ -139,9 +139,7 @@ namespace Hash_Map.DataStructs
                 current.Next = current.Next.Next;
             }
 
-
             Count--;
-
         }
     }
     public class Node<K, V>
