@@ -25,7 +25,7 @@ class Program
         //a = 5;
 
 
-        OpenAdressHashMap<int, int> openDictionary = new OpenAdressHashMap<int, int>(10000, HashFunctions.LineralyResearchHash);
+        OpenAdressHashMap<int, int> openDictionary = new OpenAdressHashMap<int, int>(10000, HashFunctions.LineralyResearchHashForInt);
         //openDictionary.Add("Пенсионер", 10);
         //openDictionary.Add("Пионер", 40);
         //openDictionary.Add("Курьер", 800);
