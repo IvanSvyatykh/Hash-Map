@@ -18,5 +18,17 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
 
         public TKey GetKey() { return _key; }
         public TValue GetValue() { return _value; }
+
+        public override string ToString()
+        {
+            if (_key != null && _value != null)
+            {
+                return _key.ToString() + "; " + _value.ToString();
+            }
+            else
+            {
+                return "null; null";
+            }
+        }
     }
 }

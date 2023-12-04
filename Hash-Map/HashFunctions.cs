@@ -121,7 +121,7 @@ namespace Hash_Map
             }
 
             int sum = list.Sum(x => x);
-            return (sum%10 + attemptNumber*12 + 34*attemptNumber*attemptNumber) % size;
+            return (sum%10 + attemptNumber + 2*attemptNumber*attemptNumber) % size;
         }
         public static int DualHash(object data, int size, int attemptNumber)
         {
@@ -138,7 +138,7 @@ namespace Hash_Map
             }
 
             int sum = list.Sum(x => x);
-            return (sum%size + attemptNumber*(1+sum%(size-2))) % size;
+            return (sum%size + attemptNumber*(1+sum%(size-1))) % size;
         }
         private static byte[] ObjectToByteArray(Object obj)
         {

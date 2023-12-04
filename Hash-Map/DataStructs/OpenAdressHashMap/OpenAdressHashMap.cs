@@ -11,10 +11,10 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
     {
         public int Size { get; private set; }
 
-        private Func<object, int, int> hashFunc;
+        private Func<object, int, int, int> hashFunc;
 
         private KeyAndValue<TKey, TValue>[] hashMapValues;
-        public OpenAdressHashMap(int size, Func<object, int, int> hashFunc)
+        public OpenAdressHashMap(int size, Func<object, int, int, int> hashFunc)
         {
             Size = size;
             this.hashFunc = hashFunc;
@@ -25,7 +25,7 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
         {
             for (int attemptNumber = 0; attemptNumber < Size; attemptNumber++)
             {
-                int index = hashFunc(key, attemptNumber);
+                int index = hashFunc(key, Size, attemptNumber);
                 if (hashMapValues[index] is null)
                 {
                     hashMapValues[index] = new KeyAndValue<TKey, TValue>(key, value);
@@ -39,7 +39,7 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
         {
             for (int attemptNumber = 0; attemptNumber < Size; attemptNumber++)
             {
-                int index = hashFunc(key, attemptNumber);
+                int index = hashFunc(key, Size, attemptNumber);
                 if (hashMapValues[index] is not null && Equals(hashMapValues[index].GetKey(), key))
                 {
                     hashMapValues[index] = null;
@@ -52,7 +52,7 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
         {
             for (int attemptNumber = 0; attemptNumber < Size; attemptNumber++)
             {
-                int index = hashFunc(key, attemptNumber);
+                int index = hashFunc(key, Size, attemptNumber);
                 if (hashMapValues[index] is not null && Equals(hashMapValues[index].GetKey(), key))
                 {
                     return hashMapValues[index].GetValue();
@@ -64,7 +64,7 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
 
         public double GetKoef() => hashMapValues.ToList().Sum(x => x is not null ? 1 : 0) / (double)Size;
 
-        public int GetLongestCluster()
+        public int GetLongestClusterLength()
         {
             int maxClusterLength = 0;
             int currentClusterLength = 0;
@@ -80,6 +80,22 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
                 }
             }
             return maxClusterLength;
+        }
+
+        public void Print()
+        {
+            foreach(KeyAndValue<TKey,TValue> keyAndValue in hashMapValues)
+            {
+                if (keyAndValue is not null)
+                {
+                    Console.WriteLine(keyAndValue.ToString());
+                }
+                else
+                {
+                    Console.WriteLine("null; null");
+                }
+                
+            }
         }
     }
 }
