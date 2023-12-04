@@ -25,15 +25,21 @@ class Program
         //a = 5;
 
 
-        OpenAdressHashMap<string, int> openDictionary = new OpenAdressHashMap<string, int>(10, HashFunctions.DualHash);
-        openDictionary.Add("Пенсионер", 10);
-        openDictionary.Add("Пионер", 40);
-        openDictionary.Add("Курьер", 800);
-        openDictionary.Add("Вальер", 30);
-        openDictionary.Add("Карьер", 30000);
-        openDictionary.Add("Карьеры", 3);
-        openDictionary.Add("Карьера", 123);
-        openDictionary.Add("Легионер", 400000);
+        OpenAdressHashMap<int, int> openDictionary = new OpenAdressHashMap<int, int>(10000, HashFunctions.LineralyResearchHash);
+        //openDictionary.Add("Пенсионер", 10);
+        //openDictionary.Add("Пионер", 40);
+        //openDictionary.Add("Курьер", 800);
+        //openDictionary.Add("Вальер", 30);
+        //openDictionary.Add("Карьер", 30000);
+        //openDictionary.Add("Карьеры", 3);
+        //openDictionary.Add("Карьера", 123);
+        //openDictionary.Add("Легионер", 400000);
+
+        Dictionary<int, int> testDict = DataSetsGenerator.GenerateSet(10000);
+        foreach(int key in testDict.Keys)
+        {
+            openDictionary.Add(key,testDict[key]);
+        }
 
 
         openDictionary.Print();

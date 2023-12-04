@@ -79,6 +79,8 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
                     currentClusterLength++;
                 }
             }
+
+            maxClusterLength = Math.Max(currentClusterLength, maxClusterLength);
             return maxClusterLength;
         }
 
