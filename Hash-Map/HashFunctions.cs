@@ -11,7 +11,6 @@ namespace Hash_Map
     {
         public static int HashWithBitMovement(object data, int size)
         {
-
             byte[] hash = ObjectToByteArray(data);
             List<byte> list = new List<byte>();
             if (hash.Length < 128)

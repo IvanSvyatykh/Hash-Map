@@ -1,5 +1,5 @@
 ﻿using Hash_Map;
-using Hash_Map.DataStructs;
+using Hash_Map.DataStructs.ChainedHashMap;
 using System.Runtime.Serialization.Formatters.Binary;
 
 class Program
@@ -22,6 +22,8 @@ class Program
         double c= dic.GetKoef();
         dic.Remove("fef");
         a = 5;
+
+
 
 
     }
