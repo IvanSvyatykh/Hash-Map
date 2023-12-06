@@ -46,7 +46,6 @@ class Program
         
         Console.WriteLine(openDictionary.GetKoef());
         Console.WriteLine(openDictionary.GetLongestClusterLength());
-        //openDictionary.Remove("fef");
     }
 
 }
