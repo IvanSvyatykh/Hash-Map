@@ -155,6 +155,16 @@ namespace Hash_Map
             int sum = (int)data;
             return (sum % size + attemptNumber * (1 + sum % (size - 1))) % size;
         }
+        public static int CircularShiftHashForInt(object data, int size, int attemptNumber)
+        {
+            int number = (int)data;
+            return ((number << 5) | (number >> 27) + attemptNumber) % size;
+        }
+        public static int XorHashForInt(object data, int size, int attemptNumber)
+        {
+            int number = (int)data;
+            return ((number<<5) ^ attemptNumber) % size;
+        }
         private static byte[] ObjectToByteArray(Object obj)
         {
             BinaryFormatter bf = new BinaryFormatter();
