@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hash_Map
 {
-    public static class HashFunctions
+    public static class HashFunctionsBase
     {
         public static int HashWithBitMovement(object data, int size)
         {
@@ -140,35 +140,8 @@ namespace Hash_Map
             int sum = list.Sum(x => x);
             return (sum%size + attemptNumber*(1+sum%(size-1))) % size;
         }
-        public static int LineralyResearchHashForInt(object data, int size, int attemptNumber)
-        {
-            int sum = (int)data;
-            return (sum % 68 + attemptNumber) % size;
-        }
-
-        public static int QuadraticResearchHashForInt(object data, int size, int attemptNumber)
-        {
-            int sum = (int)data;
-            return (sum % size + attemptNumber + 2 * attemptNumber * attemptNumber) % size;
-        }
-        
-        public static int DualHashForInt(object data, int size, int attemptNumber)
-        {
-            int sum = (int)data;
-            return (sum % size + attemptNumber * (1 + sum % (size - 1))) % size;
-        }
-        
-        public static int CircularShiftHashForInt(object data, int size, int attemptNumber)
-        {
-            int number = (int)data;
-            return ((number << 5) | (number >> 27) + attemptNumber) % size;
-        }
-        
-        public static int XorHashForInt(object data, int size, int attemptNumber)
-        {
-            int number = (int)data;
-            return ((number<<5) ^ attemptNumber) % size;
-        }
+       
+       
         private static byte[] ObjectToByteArray(Object obj)
         {
             BinaryFormatter bf = new BinaryFormatter();
