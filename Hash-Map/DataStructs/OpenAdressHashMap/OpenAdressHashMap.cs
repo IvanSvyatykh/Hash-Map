@@ -32,11 +32,12 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
                     return;
                 }else if (Equals(hashMapValues[index].GetKey(),key))
                 {
-                    hashMapValues[index] = new KeyAndValue<TKey, TValue>(key, value);
-                    return;
+                    throw new InvalidOperationException("В таблице уже существует пара с таким ключём");
+                    //hashMapValues[index] = new KeyAndValue<TKey, TValue>(key, value);
+                    //return;
                 }
             }
-            throw new InvalidOperationException("К сожалению,случилось переполнение хэш таблицы, перезапустите программу.");
+            throw new InvalidOperationException("Cлучилось переполнение хэш таблицы.");
         }
 
         public void Remove(TKey key)

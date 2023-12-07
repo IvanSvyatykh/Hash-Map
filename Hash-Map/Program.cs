@@ -129,7 +129,8 @@ class Program
                     openAdressHashMap.Add(key, value);
                     Console.WriteLine($"Пара {key};{value} была успешно добавлена в Хэш-таблицу");
                 }catch (Exception e) {
-                    Console.WriteLine("К сожалению, при попытке добавить новую пару в Хэш-таблицу, случилось переполнение");
+                    Console.WriteLine("К сожалению, при попытке добавить новую пару в Хэш-таблицу, случилась ошибка\n"+
+                                        e.Message);
                 }
 ;                return;
             }
