@@ -30,6 +30,10 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
                 {
                     hashMapValues[index] = new KeyAndValue<TKey, TValue>(key, value);
                     return;
+                }else if (Equals(hashMapValues[index].GetKey(),key))
+                {
+                    hashMapValues[index] = new KeyAndValue<TKey, TValue>(key, value);
+                    return;
                 }
             }
             throw new InvalidOperationException("К сожалению,случилось переполнение хэш таблицы, перезапустите программу.");

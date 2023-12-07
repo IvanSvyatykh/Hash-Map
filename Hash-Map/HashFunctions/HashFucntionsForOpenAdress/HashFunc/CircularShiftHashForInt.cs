@@ -14,8 +14,8 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
         }
         private int HashFunc(object data, int size, int attemptNumber)
         {
-            int number = (int)data;
-            return (number << 5 | (number >> 27) + attemptNumber) % size;
+            int key = (int)data;
+            return (key << 5 | (key >> 27) + attemptNumber) % size;
         }
 
         public Func<object, int, int, int> GetHashFunc()

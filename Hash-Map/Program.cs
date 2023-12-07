@@ -12,16 +12,6 @@ class Program
     private static int HashTableSize = 0;
     public static void Main()
     {
-        //ChainedHashMap<string, int> dic = new ChainedHashMap<string, int>(10, HashFunctions.HashWithBitMovement);
-        //dic.Add("Пенсионер", 10);
-        //dic.Add("Пионер", 40);
-        //dic.Add("Курьер", 800);
-        //dic.Add("Вальер", 30);
-        //dic.Add("Карьер", 30);
-        //int a = HashFunctions.HashWithDevision("Вальер", 10);
-        //int b = HashFunctions.HashWithDevision("Карьер", 10);
-
-
         IHashMap<int, int> hashMap;
         Console.WriteLine("Здравствуйте, вас приветствует Консольное приложение, для работы с Хэш-таблицами\n"+
                           "С каким именно типом Хэш-таблиц вы бы хотели поработать?\n" +
@@ -59,15 +49,13 @@ class Program
         if (isUserWantGenereateNumbers == "1")
         {
             Console.Clear();
-
-            Console.WriteLine("Хорошо, тогда вот итоговая таблица:");
-            Console.WriteLine();
-
+            
             Dictionary<int, int> testDict = DataSetsGenerator.GenerateSet(HashTableSize);
             foreach (int key in testDict.Keys)
             {
                 openAdressHashMap.Add(key, testDict[key]);
             }
+            Console.WriteLine("Хорошо, тогда вот итоговая таблица:");
             openAdressHashMap.Print();
 
             Console.WriteLine("На этом работа с программой завершена, теперь вы можете только перезапустить её");
@@ -81,36 +69,41 @@ class Program
     private static void WorkWithHashTableByCommands(OpenAdressHashMap<int, int> openAdressHashMap)
     {
         Console.Clear();
-        Console.WriteLine("Хорошо, тогда теперь у вас есть следующий перечень команд:\n" +
+        while (true)
+        {   
+            Console.WriteLine("У вас есть следующий перечень команд:\n" +
                           "Введите 1, чтобы добавить новую пару в таблицу (ключ и значение нужно ввести в следующей за командой строчке, через ;)\n" +
                           "Введите 2, чтобы получить пару ключ;значение по ключу, если они есть в таблице (ключ нужно ввести в следующей за командой строчке)\n" +
                           "Введите 3, чтобы удалить пару ключ;значение по ключу, если они есть в таблице (ключ нужно ввести в следующей за командой строчке)\n" +
                           "Введите 4, чтобы вывести текущее состояние Хэш-таблицы с коэфициентом заполнения и размером самого длинного кластера\n" +
                           "Введите 5, чтобы закончить работу с программой\n");
-        
-        while (true)
-        {
+
             Console.Write("Введите команду: ");
             string userCommand = Console.ReadLine();
             switch (userCommand)
             {
                 case "1":
                     AddPairToTable(openAdressHashMap);
+                    Console.WriteLine();
                     break;
                 case "2":
                     FindPairFromTable(openAdressHashMap);
+                    Console.WriteLine();
                     break;
                 case "3":
                     RemovePairFromTable(openAdressHashMap);
+                    Console.WriteLine();
                     break;
                 case "4":
                     PrintInfoAboutTable(openAdressHashMap);
+                    Console.WriteLine();
                     break;
                 case "5":
                     Console.WriteLine("Программа завершила свою работу, теперь вы можете только перезапустить её");
                     return;
                 default:
                     Console.WriteLine("Вы ошиблись с введенной командой, попробуйте ещё раз");
+                    Console.WriteLine();
                     break;
             }
         }
@@ -135,11 +128,10 @@ class Program
                 {
                     openAdressHashMap.Add(key, value);
                     Console.WriteLine($"Пара {key};{value} была успешно добавлена в Хэш-таблицу");
-                    Console.WriteLine();
                 }catch (Exception e) {
                     Console.WriteLine("К сожалению, при попытке добавить новую пару в Хэш-таблицу, случилось переполнение");
                 }
-                return;
+;                return;
             }
             else
             {
@@ -190,11 +182,13 @@ class Program
     }
     private static void PrintInfoAboutTable(OpenAdressHashMap<int, int> openAdressHashMap)
     {
+        Console.Clear();
         Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
         openAdressHashMap.Print();
 
         Console.WriteLine("Коэфициент заполнения равен: "+openAdressHashMap.GetKoef());
         Console.WriteLine("Длина самого длинного кластера равна: " + openAdressHashMap.GetLongestClusterLength());
+        Console.WriteLine();
     }
     private static OpenAdressHashMap<int, int> CreateHashTableObject()
     {

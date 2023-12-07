@@ -14,8 +14,8 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress
         }
         private int HashFunc(object data, int size, int attemptNumber)
         {
-            int sum = (int)data;
-            return (sum % size + attemptNumber * (1 + sum % (size - 1))) % size;
+            int key = (int)data;
+            return (key % size + attemptNumber * (1 + key % (size - 1))) % size;
         }
         public Func<object, int, int, int> GetHashFunc()
         {
