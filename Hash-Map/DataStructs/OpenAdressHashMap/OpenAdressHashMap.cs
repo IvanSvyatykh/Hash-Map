@@ -33,8 +33,6 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
                 }else if (Equals(hashMapValues[index].GetKey(),key))
                 {
                     throw new InvalidOperationException("В таблице уже существует пара с таким ключём");
-                    //hashMapValues[index] = new KeyAndValue<TKey, TValue>(key, value);
-                    //return;
                 }
             }
             throw new InvalidOperationException("Cлучилось переполнение хэш таблицы.");
@@ -47,7 +45,8 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
                 int index = hashFunc(key, Size, attemptNumber);
                 if (hashMapValues[index] is not null && Equals(hashMapValues[index].GetKey(), key))
                 {
-                    Console.WriteLine($"Пара с ключем {key}, а именно {hashMapValues[index].GetKey()};{hashMapValues[index].GetValue()} была успешно удалена из Хэш-таблицы");
+                    Console.WriteLine($"Пара с ключем {key}, а именно " +
+                        $"{hashMapValues[index].GetKey()};{hashMapValues[index].GetValue()} была успешно удалена из Хэш-таблицы");
                     hashMapValues[index] = null;
                     return;
                 }
@@ -62,7 +61,8 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
                 int index = hashFunc(key, Size, attemptNumber);
                 if (hashMapValues[index] is not null && Equals(hashMapValues[index].GetKey(), key))
                 {
-                    Console.WriteLine($"Вот искомая пара с ключем {key} из Хэш-таблицы: {hashMapValues[index].GetKey()};{hashMapValues[index].GetValue()}");
+                    Console.WriteLine($"Вот искомая пара с ключем {key} из Хэш-таблицы:" +
+                        $" {hashMapValues[index].GetKey()};{hashMapValues[index].GetValue()}");
                     return;
                 }
             }
