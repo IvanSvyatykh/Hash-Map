@@ -27,7 +27,7 @@ namespace Hash_Map.DataStructs.ChainedHashMap
 
         }
 
-        public TValue Get(TKey key)
+        public void Get(TKey key)
         {
             int hash = _hashFunc(key, Size);
             Node<TKey, TValue> node = null;
@@ -41,8 +41,6 @@ namespace Hash_Map.DataStructs.ChainedHashMap
             {
                 throw new ArgumentException($"Hash-Map does not contains element with given key {key.ToString()}");
             }
-
-            return node.Value;
         }
 
         public void Add(TKey key, TValue value)

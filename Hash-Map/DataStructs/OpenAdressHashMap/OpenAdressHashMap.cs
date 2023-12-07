@@ -32,7 +32,7 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
                     return;
                 }
             }
-            throw new InvalidOperationException("Случилось переполнение хэш таблицы");
+            throw new InvalidOperationException("К сожалению,случилось переполнение хэш таблицы, перезапустите программу.");
         }
 
         public void Remove(TKey key)
@@ -42,24 +42,27 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
                 int index = hashFunc(key, Size, attemptNumber);
                 if (hashMapValues[index] is not null && Equals(hashMapValues[index].GetKey(), key))
                 {
+                    Console.WriteLine($"Пара с ключем {key}, а именно {hashMapValues[index].GetKey()};{hashMapValues[index].GetValue()} была успешно удалена из Хэш-таблицы");
                     hashMapValues[index] = null;
+                    return;
                 }
             }
 
-            throw new InvalidOperationException($"Элемента с данным ключём {key} нет в хэш таблице");
+            Console.WriteLine($"Элемента с данным ключём {key} нет в Хэш-таблице");
         }
-        public TValue Get(TKey key)
+        public void Get(TKey key)
         {
             for (int attemptNumber = 0; attemptNumber < Size; attemptNumber++)
             {
                 int index = hashFunc(key, Size, attemptNumber);
                 if (hashMapValues[index] is not null && Equals(hashMapValues[index].GetKey(), key))
                 {
-                    return hashMapValues[index].GetValue();
+                    Console.WriteLine($"Вот искомая пара с ключем {key} из Хэш-таблицы: {hashMapValues[index].GetKey()};{hashMapValues[index].GetValue()}");
+                    return;
                 }
             }
 
-            throw new InvalidOperationException($"Элемента с данным ключём {key} нет в хэш таблице");
+            Console.WriteLine($"Элемента с данным ключём {key} нет в Хэш-таблице");
         }
 
         public double GetKoef() => hashMapValues.ToList().Sum(x => x is not null ? 1 : 0) / (double)Size;
