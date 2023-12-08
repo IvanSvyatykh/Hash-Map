@@ -3,6 +3,7 @@ using Hash_Map.DataStructs;
 using Hash_Map.DataStructs.ChainedHashMap;
 using Hash_Map.DataStructs.OpenAdressHashMap;
 using Hash_Map.HashFunctions.HashFucntionsForOpenAdress;
+using Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -12,16 +13,68 @@ class Program
     private static int HashTableSize = 0;
     public static void Main()
     {
-        IHashMap<int, int> hashMap;
-        Console.WriteLine("Здравствуйте, вас приветствует Консольное приложение, для работы с Хэш-таблицами\n"+
+        //IHashMap<int, int> hashMap;
+        //Dictionary<int, int> hashDictionary = new Dictionary<int, int>();
+        //hashDictionary.Add(11, 45);
+        //hashDictionary.Add(68, 45);
+        //hashDictionary.Add(67, 45);
+        //hashDictionary.Add(234, 45);
+        //hashDictionary.Add(2353, 45);
+
+
+        //OpenAdressHashMap<int,int> hashMapLin = new OpenAdressHashMap<int, int>(12,new LineralyResearchHashForInt().GetHashFunc());
+        //OpenAdressHashMap<int, int> hashMapQv = new OpenAdressHashMap<int, int>(12, new QuadraticResearchHashForInt().GetHashFunc());
+        //OpenAdressHashMap<int, int> hashMapDou = new OpenAdressHashMap<int, int>(12, new DualHashForInt().GetHashFunc());
+        //OpenAdressHashMap<int, int> hashMapMove = new OpenAdressHashMap<int, int>(12, new CircularShiftHashForInt().GetHashFunc());
+        //OpenAdressHashMap<int, int> hashMapXor = new OpenAdressHashMap<int, int>(12, new XorHashForInt().GetHashFunc());
+
+        //foreach (int i in hashDictionary.Keys)
+        //{
+        //    hashMapLin.Add(i, hashDictionary[i]);
+        //    hashMapQv.Add(i, hashDictionary[i]);
+        //    hashMapDou.Add(i, hashDictionary[i]);
+        //    hashMapMove.Add(i, hashDictionary[i]);
+        //    hashMapXor.Add(i, hashDictionary[i]);
+        //}
+        //Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
+        //hashMapLin.Print();
+        //Console.WriteLine();
+        //Console.WriteLine("Длина самого длинного кластера равна: " + hashMapLin.GetLongestClusterLength());
+        //Console.WriteLine();
+
+        //Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
+        //hashMapQv.Print();
+        //Console.WriteLine();
+        //Console.WriteLine("Длина самого длинного кластера равна: " + hashMapQv.GetLongestClusterLength());
+        //Console.WriteLine();
+
+        //Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
+        //hashMapDou.Print();
+        //Console.WriteLine();
+        //Console.WriteLine("Длина самого длинного кластера равна: " + hashMapDou.GetLongestClusterLength());
+        //Console.WriteLine();
+
+        //Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
+        //hashMapMove.Print();
+        //Console.WriteLine();
+        //Console.WriteLine("Длина самого длинного кластера равна: " + hashMapMove.GetLongestClusterLength());
+        //Console.WriteLine();
+
+        //Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
+        //hashMapXor.Print();
+        //Console.WriteLine();
+        //Console.WriteLine("Длина самого длинного кластера равна: " + hashMapXor.GetLongestClusterLength());
+        //Console.WriteLine();
+
+        Console.WriteLine("Здравствуйте, вас приветствует Консольное приложение, для работы с Хэш-таблицами\n" +
                           "С каким именно типом Хэш-таблиц вы бы хотели поработать?\n" +
-                          "Введите 1, если вы хотите поработать с Хэш-таблицой, использующей метод разрешения коллизий с помощью цепочек.\n"+
+                          "Введите 1, если вы хотите поработать с Хэш-таблицой, использующей метод разрешения коллизий с помощью цепочек.\n" +
                           "Введите что угодно кроме 1, если вы хотите поработать с Хэш-таблицой, использующей метод открытой адресации для разрешения коллизий.");
-        
+
         string typeFlag = Console.ReadLine();
         if (typeFlag == "1")
         {
-            
+
         }
         else
         {
@@ -187,7 +240,6 @@ class Program
         Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
         openAdressHashMap.Print();
 
-        Console.WriteLine("Коэфициент заполнения равен: "+openAdressHashMap.GetKoef());
         Console.WriteLine("Длина самого длинного кластера равна: " + openAdressHashMap.GetLongestClusterLength());
         Console.WriteLine();
     }
