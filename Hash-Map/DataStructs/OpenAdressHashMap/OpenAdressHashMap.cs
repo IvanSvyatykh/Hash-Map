@@ -30,7 +30,8 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
                 {
                     hashMapValues[index] = new KeyAndValue<TKey, TValue>(key, value);
                     return;
-                }else if (Equals(hashMapValues[index].GetKey(),key))
+                }
+                else if (Equals(hashMapValues[index].GetKey(), key))
                 {
                     throw new InvalidOperationException("В таблице уже существует пара с таким ключём");
                 }
@@ -78,7 +79,8 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
             int currentClusterLength = 0;
             for (int i = 0; i < Size; i++)
             {
-                if (hashMapValues[i] is null){
+                if (hashMapValues[i] is null)
+                {
                     maxClusterLength = Math.Max(currentClusterLength, maxClusterLength);
                     currentClusterLength = 0;
                 }
@@ -94,7 +96,7 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
 
         public void Print()
         {
-            foreach(KeyAndValue<TKey,TValue> keyAndValue in hashMapValues)
+            foreach (KeyAndValue<TKey, TValue> keyAndValue in hashMapValues)
             {
                 if (keyAndValue is not null)
                 {
@@ -104,7 +106,7 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
                 {
                     Console.WriteLine("null; null");
                 }
-                
+
             }
         }
     }

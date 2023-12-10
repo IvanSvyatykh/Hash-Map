@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hash_Map.DataStructs.OpenAdressHashMap;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -95,6 +96,32 @@ namespace Hash_Map.DataStructs.ChainedHashMap
         public int GetShortestChain() => _values.ToList().Min(x => x.Count);
 
         public int GetLongestChain() => _values.ToList().Max(x => x.Count);
+
+
+        public void Print()
+        {
+            foreach (var el in _values)
+            {
+                if (el is not null)
+                {
+                    bool count = true;
+                    foreach (var e in el)
+                    {
+                        if (count)
+                        {
+                            Console.Write(e.Key + ": ");
+                            count = false;
+                        }
+                        Console.Write($"{e.Value} ");
+                    }
+                }
+                else
+                {
+                    Console.Write("null; null");
+                }
+                Console.WriteLine();
+            }
+        }
 
     }
 }
