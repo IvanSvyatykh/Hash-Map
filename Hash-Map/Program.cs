@@ -14,58 +14,7 @@ class Program
     private static int HashTableSize = 0;
     public static void Main()
     {
-        //IHashMap<int, int> hashMap;
-        //Dictionary<int, int> hashDictionary = new Dictionary<int, int>();
-        //hashDictionary.Add(11, 45);
-        //hashDictionary.Add(68, 45);
-        //hashDictionary.Add(67, 45);
-        //hashDictionary.Add(234, 45);
-        //hashDictionary.Add(2353, 45);
-
-
-        //OpenAdressHashMap<int,int> hashMapLin = new OpenAdressHashMap<int, int>(12,new LineralyResearchHashForInt().GetHashFunc());
-        //OpenAdressHashMap<int, int> hashMapQv = new OpenAdressHashMap<int, int>(12, new QuadraticResearchHashForInt().GetHashFunc());
-        //OpenAdressHashMap<int, int> hashMapDou = new OpenAdressHashMap<int, int>(12, new DualHashForInt().GetHashFunc());
-        //OpenAdressHashMap<int, int> hashMapMove = new OpenAdressHashMap<int, int>(12, new CircularShiftHashForInt().GetHashFunc());
-        //OpenAdressHashMap<int, int> hashMapXor = new OpenAdressHashMap<int, int>(12, new XorHashForInt().GetHashFunc());
-
-        //foreach (int i in hashDictionary.Keys)
-        //{
-        //    hashMapLin.Add(i, hashDictionary[i]);
-        //    hashMapQv.Add(i, hashDictionary[i]);
-        //    hashMapDou.Add(i, hashDictionary[i]);
-        //    hashMapMove.Add(i, hashDictionary[i]);
-        //    hashMapXor.Add(i, hashDictionary[i]);
-        //}
-        //Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
-        //hashMapLin.Print();
-        //Console.WriteLine();
-        //Console.WriteLine("Длина самого длинного кластера равна: " + hashMapLin.GetLongestClusterLength());
-        //Console.WriteLine();
-
-        //Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
-        //hashMapQv.Print();
-        //Console.WriteLine();
-        //Console.WriteLine("Длина самого длинного кластера равна: " + hashMapQv.GetLongestClusterLength());
-        //Console.WriteLine();
-
-        //Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
-        //hashMapDou.Print();
-        //Console.WriteLine();
-        //Console.WriteLine("Длина самого длинного кластера равна: " + hashMapDou.GetLongestClusterLength());
-        //Console.WriteLine();
-
-        //Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
-        //hashMapMove.Print();
-        //Console.WriteLine();
-        //Console.WriteLine("Длина самого длинного кластера равна: " + hashMapMove.GetLongestClusterLength());
-        //Console.WriteLine();
-
-        //Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
-        //hashMapXor.Print();
-        //Console.WriteLine();
-        //Console.WriteLine("Длина самого длинного кластера равна: " + hashMapXor.GetLongestClusterLength());
-        //Console.WriteLine();
+        
 
         Console.WriteLine("Здравствуйте, вас приветствует Консольное приложение, для работы с Хэш-таблицами\n" +
                           "С каким именно типом Хэш-таблиц вы бы хотели поработать?\n" +
@@ -189,7 +138,7 @@ class Program
                     Console.WriteLine("К сожалению, при попытке добавить новую пару в Хэш-таблицу, случилась ошибка\n" +
                                         e.Message);
                 }
-; return;
+                return;
             }
             else
             {
@@ -271,16 +220,23 @@ class Program
         if (isUserWantGenereateNumbers == "1")
         {
             Console.Clear();
-
-            Dictionary<int, int> testDict = DataSetsGenerator.GenerateSet(HashTableSize);
-            foreach (int key in testDict.Keys)
+            try
             {
-                openAdressHashMap.Add(key, testDict[key]);
-            }
-            Console.WriteLine("Хорошо, тогда вот итоговая таблица:");
-            openAdressHashMap.Print();
+                Dictionary<int, int> testDict = DataSetsGenerator.GenerateSet(HashTableSize);
+                foreach (int key in testDict.Keys)
+                {
+                    openAdressHashMap.Add(key, testDict[key]);
+                }
+                Console.WriteLine("Хорошо, тогда вот итоговая таблица:");
+                openAdressHashMap.Print();
 
-            Console.WriteLine("На этом работа с программой завершена, теперь вы можете только перезапустить её");
+                Console.WriteLine("На этом работа с программой завершена, теперь вы можете только перезапустить её");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("К сожалению, во время заполнения Хэш-таблицы, случилась ошибка\n" +
+                e.Message);
+            }
         }
         else
         {
@@ -354,9 +310,9 @@ class Program
                 catch (Exception e)
                 {
                     Console.WriteLine("К сожалению, при попытке добавить новую пару в Хэш-таблицу, случилась ошибка\n" +
-                                        e.Message);
+                    e.Message);
                 }
-; return;
+               
             }
             else
             {
