@@ -46,7 +46,7 @@ namespace Hash_Map.DataStructs.ChainedHashMap
         {
             foreach (var item in this)
             {
-                if (Equals(key, item.Key))
+                if (Equals(key, item.Key) && Equals(value,item.Value))
                 {
                     return true;
                 }
@@ -60,7 +60,7 @@ namespace Hash_Map.DataStructs.ChainedHashMap
         {
             if (Check(key, value))
             {
-                throw new ArgumentException($"Hash-Map already conatains element with key:{key}");
+                throw new ArgumentException($"Hash-Map already conatains same Element");
             }
             if (IsEmpty())
             {

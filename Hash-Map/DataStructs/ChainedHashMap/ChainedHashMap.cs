@@ -112,7 +112,7 @@ namespace Hash_Map.DataStructs.ChainedHashMap
                             Console.Write(e.Key + ": ");
                             count = false;
                         }
-                        Console.Write($"{e.Value} ");
+                        Console.Write($"{e.Value}->");
                     }
                 }
                 else
