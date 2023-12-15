@@ -312,7 +312,7 @@ class Program
                     Console.WriteLine("К сожалению, при попытке добавить новую пару в Хэш-таблицу, случилась ошибка\n" +
                     e.Message);
                 }
-               
+                return;
             }
             else
             {
