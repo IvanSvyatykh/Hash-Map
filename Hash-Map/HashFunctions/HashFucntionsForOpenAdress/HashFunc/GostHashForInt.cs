@@ -26,16 +26,16 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
         private int HashFunc(object data, int size, int attemptNumber)
         {
             int key = (int)data;
-            string Hin = 224 * '0' + Convert.ToString(key + attemptNumber, 2);
+            string Hin = Convert.ToString(key + attemptNumber, 2).PadLeft(256, '0');
 
             string[] konstants = new string[]{
-            (64 * '0').ToString(),
-            "ff00ffff000000ffff0000ff00ffff0000ff00ff00ff00ffff00ff00ff00ff00",
-            (64 * '0').ToString()};
+            "".PadLeft(256, '0'),
+            "111111110000000011111111111111110000000000000000111111111111111100000000111111110000000000111111111111111111000000111111110000000011111111111111110000000111111111111111110000000111111111111111111110000111111110000000011111111111111111100000011111111111111111100000011111111111111111110000011111111111111111110000011111111111111111111111000000",
+            "".PadLeft(256, '0')};
 
-            string U = 224 * '0' + Convert.ToString(key + attemptNumber, 2);
-            string V = 224 * '0' + Convert.ToString(key + attemptNumber, 2);
-            string W = 224 * '0' + Convert.ToString(key + attemptNumber, 2);
+            string U = Convert.ToString(key + attemptNumber, 2).PadLeft(256, '0');
+            string V = Convert.ToString(key + attemptNumber, 2).PadLeft(256, '0');
+            string W = Convert.ToString(key + attemptNumber, 2).PadLeft(256, '0');
 
             string[] keys = new string[4];
             keys[0] = FunctionP(W);
@@ -49,7 +49,8 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
 
             StringBuilder encValueParts = new StringBuilder();
             for (int i = 0; i < 4; i++) {
-                encValueParts.Append(Encryption(Hin.Substring(64 * i, 64), keys[i]));
+                int k = i != 0 ? 1 : 0;
+                encValueParts.Append(Encryption(Hin.Substring(64 * i - k, 64), keys[i]));
             }
 
             string encValue = encValueParts.ToString();
@@ -58,13 +59,13 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
             string lastPartOfResult="";
             for (int i = 1; i < 16; i++)
             {
-                lastPartOfResult = XorForStrings(lastPartOfResult, encValue.Substring(16 * i, 16));
+                lastPartOfResult = XorForStrings(lastPartOfResult, encValue.Substring(16 * i - 1, 16));
             }
             resultParts.Append(lastPartOfResult);
 
             for (int i = 15;i > 1;i--)
             {
-                resultParts.Append(encValue.Substring(16 * i, 16));
+                resultParts.Append(encValue.Substring(16 * i - 1, 16));
             }
 
             return Convert.ToInt32(resultParts.ToString().Substring(224,32),2)%size;
@@ -73,7 +74,7 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
         private string Encryption(string value, string key)
         {
             char[] firstPart = value.Substring(0,32).ToCharArray();
-            char[] secondPart = value.Substring(32, 32).ToCharArray();
+            char[] secondPart = value.Substring(31, 32).ToCharArray();
 
             
             for (int step = 0; step < 3; step++) {       // K1..K24 идут в прямом порядке - три цикла K1..K8
@@ -81,8 +82,9 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
                 {
                     char[] temp = new char[32];
                     firstPart.CopyTo(temp, 0);
-                    
-                    firstPart = Convert.ToString(Convert.ToInt32(new string(secondPart),2) ^ EncryptionFunc(firstPart,key.Substring(j*32,32)),2).ToCharArray();
+
+                    int k = j != 0 ? 1 : 0;
+                    firstPart = Convert.ToString(Convert.ToInt32(new string(secondPart),2) ^ EncryptionFunc(firstPart,key.Substring(j*32 -k,32)),2).PadLeft(32, '0').ToCharArray();
                     secondPart = temp;
                 }
             }
@@ -92,7 +94,8 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
                 char[] temp = new char[32];
                 firstPart.CopyTo(temp, 0);
 
-                firstPart = Convert.ToString(Convert.ToInt32(new string(secondPart), 2) ^ EncryptionFunc(firstPart, key.Substring(i * 32, 32)), 2).ToCharArray();
+                int k = i != 0 ? 1 : 0;
+                firstPart = Convert.ToString(Convert.ToInt32(new string(secondPart), 2) ^ EncryptionFunc(firstPart, key.Substring(i * 32 -k, 32)), 2).PadLeft(32, '0').ToCharArray();
                 secondPart = temp;
             }
 
@@ -102,11 +105,11 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
         private int EncryptionFunc(char[] bitsOfNumber, string key)
         {
             uint value = (uint)((Convert.ToInt64(new string(bitsOfNumber), 2) + Convert.ToInt64(key.ToString(),2))%4294967296);
-            string bitValue = Convert.ToString(value, 16);
+            string bitValue = Convert.ToString(value, 16).PadLeft(8, '0');
             StringBuilder result = new StringBuilder();
             for(int i = 0; i < 8; i++)
             {   
-                result.Append(Convert.ToString(S[i, Convert.ToInt32(bitValue[i].ToString(), 16)],16));
+                result.Append(Convert.ToString(S[i, Convert.ToInt32(bitValue[i].ToString(), 16)],16).PadLeft(4, '0'));
             }
             return Convert.ToInt32(result.ToString(), 16)<<11;
         }
@@ -114,24 +117,26 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
         private string XorForStrings(string value1,string value2)
         {
             StringBuilder result = new StringBuilder();
-            for (int i = 3; i >= 0; i--)
+            for (int i = 7; i >= 0; i--)
             {
-                result.Append((Convert.ToInt64(value1.Substring(i*64, 64),2) ^ Convert.ToInt64(value2.Substring(i*64, 64),2)).ToString());
+                int k = i != 0 ? 1 : 0;
+                result.Append(Convert.ToString(Convert.ToUInt32(value1.Substring(i*32-k, 32),2) ^ Convert.ToUInt32(value2.Substring(i*32 - k, 32),2),2).PadLeft(32, '0'));
             }
            
             return result.ToString();
         }
         private string FunctionA(string value) 
         {
-            string xorValue = (long.Parse(value.Substring(192,64)) ^ long.Parse(value.Substring(128, 64))).ToString();
-            return xorValue + value.Substring(0, 64)+value.Substring(64,64)+ value.Substring(192, 64);
+            string xorValuePart1 = Convert.ToString(Convert.ToUInt32(value.Substring(191, 32),2) ^ Convert.ToUInt32(value.Substring(127, 32),2),2).PadLeft(32, '0');
+            string xorValuePart2 = Convert.ToString(Convert.ToUInt32(value.Substring(223, 32), 2) ^ Convert.ToUInt32(value.Substring(159, 32), 2), 2).PadLeft(32, '0');
+            return xorValuePart1 + xorValuePart2 + value.Substring(0, 64)+value.Substring(63,64)+ value.Substring(191, 64);
         }
         private string FunctionP(string value)
         {   
             StringBuilder resValue = new StringBuilder();
             for (int i = 31; i > 0; i--)
             {
-                resValue.Append(value.Substring((FIFunction(i)-1)<<3, 8));
+                resValue.Append(value.Substring(((FIFunction(i)-1)<<3) - 1, 8));
             }
             return resValue.ToString();
         }

@@ -14,22 +14,46 @@ class Program
     private static int HashTableSize = 0;
     public static void Main()
     {
-        
+        IHashMap<int, int> hashMap;
+        Dictionary<int, int> hashDictionary = new Dictionary<int, int>();
+        hashDictionary.Add(11, 45);
+        hashDictionary.Add(68, 45);
+        hashDictionary.Add(67, 45);
+        hashDictionary.Add(234, 45);
+        hashDictionary.Add(2353, 45);
 
-        Console.WriteLine("Здравствуйте, вас приветствует Консольное приложение, для работы с Хэш-таблицами\n" +
-                          "С каким именно типом Хэш-таблиц вы бы хотели поработать?\n" +
-                          "Введите 1, если вы хотите поработать с Хэш-таблицой, использующей метод разрешения коллизий с помощью цепочек.\n" +
-                          "Введите что угодно кроме 1, если вы хотите поработать с Хэш-таблицой, использующей метод открытой адресации для разрешения коллизий.");
 
-        string typeFlag = Console.ReadLine();
-        if (typeFlag == "1")
+
+        OpenAdressHashMap<int, int> hashMapXor = new OpenAdressHashMap<int, int>(12, new GostHashForInt().GetHashFunc());
+
+        foreach (int i in hashDictionary.Keys)
         {
-            WorkWithChainesTable();
+
+            hashMapXor.Add(i, hashDictionary[i]);
         }
-        else
-        {
-            WorkWithOpenAdressTable();
-        }
+
+
+        Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
+        hashMapXor.Print();
+        Console.WriteLine();
+        Console.WriteLine("Длина самого длинного кластера равна: " + hashMapXor.GetLongestClusterLength());
+        Console.WriteLine();
+
+
+        //Console.WriteLine("Здравствуйте, вас приветствует Консольное приложение, для работы с Хэш-таблицами\n" +
+        //                  "С каким именно типом Хэш-таблиц вы бы хотели поработать?\n" +
+        //                  "Введите 1, если вы хотите поработать с Хэш-таблицой, использующей метод разрешения коллизий с помощью цепочек.\n" +
+        //                  "Введите что угодно кроме 1, если вы хотите поработать с Хэш-таблицой, использующей метод открытой адресации для разрешения коллизий.");
+
+        //string typeFlag = Console.ReadLine();
+        //if (typeFlag == "1")
+        //{
+        //    WorkWithChainesTable();
+        //}
+        //else
+        //{
+        //    WorkWithOpenAdressTable();
+        //}
     }
 
     private static void WorkWithChainesTable()
