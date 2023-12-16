@@ -76,7 +76,6 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
             char[] firstPart = value.Substring(0,32).ToCharArray();
             char[] secondPart = value.Substring(31, 32).ToCharArray();
 
-            
             for (int step = 0; step < 3; step++) {       // K1..K24 идут в прямом порядке - три цикла K1..K8
                 for (int j = 0; j < 8; j += 1)
                 {
@@ -84,7 +83,7 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
                     firstPart.CopyTo(temp, 0);
 
                     int k = j != 0 ? 1 : 0;
-                    firstPart = Convert.ToString(Convert.ToInt32(new string(secondPart),2) ^ EncryptionFunc(firstPart,key.Substring(j*32 -k,32)),2).PadLeft(32, '0').ToCharArray();
+                    firstPart = Convert.ToString(Convert.ToUInt32(new string(secondPart),2) ^ EncryptionFunc(firstPart,key.Substring(j*32 - k,32)),2).PadLeft(32, '0').ToCharArray();
                     secondPart = temp;
                 }
             }
@@ -95,23 +94,25 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
                 firstPart.CopyTo(temp, 0);
 
                 int k = i != 0 ? 1 : 0;
-                firstPart = Convert.ToString(Convert.ToInt32(new string(secondPart), 2) ^ EncryptionFunc(firstPart, key.Substring(i * 32 -k, 32)), 2).PadLeft(32, '0').ToCharArray();
+                firstPart = Convert.ToString(Convert.ToUInt32(new string(secondPart), 2) ^ EncryptionFunc(firstPart, key.Substring(i * 32 - k, 32)), 2).PadLeft(32, '0').ToCharArray();
                 secondPart = temp;
             }
 
             return new string(firstPart) + new string(secondPart);
         }
 
-        private int EncryptionFunc(char[] bitsOfNumber, string key)
+        private uint EncryptionFunc(char[] bitsOfNumber, string key)
         {
-            uint value = (uint)((Convert.ToInt64(new string(bitsOfNumber), 2) + Convert.ToInt64(key.ToString(),2))%4294967296);
+            uint value = (uint)((Convert.ToUInt64(new string(bitsOfNumber), 2) + Convert.ToUInt64(key.ToString(),2))%4294967296);
             string bitValue = Convert.ToString(value, 16).PadLeft(8, '0');
             StringBuilder result = new StringBuilder();
             for(int i = 0; i < 8; i++)
             {   
-                result.Append(Convert.ToString(S[i, Convert.ToInt32(bitValue[i].ToString(), 16)],16).PadLeft(4, '0'));
+                result.Append(Convert.ToString(S[i, Convert.ToUInt32(bitValue[i].ToString(), 16)],16));
             }
-            return Convert.ToInt32(result.ToString(), 16)<<11;
+            string stringRes = result.ToString();
+            uint uintRes = Convert.ToUInt32(stringRes,16);
+            return uintRes << 11;
         }
 
         private string XorForStrings(string value1,string value2)
@@ -134,7 +135,7 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
         private string FunctionP(string value)
         {   
             StringBuilder resValue = new StringBuilder();
-            for (int i = 31; i > 0; i--)
+            for (int i = 32; i > 0; i--)
             {
                 resValue.Append(value.Substring(((FIFunction(i)-1)<<3) - 1, 8));
             }
