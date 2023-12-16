@@ -27,16 +27,16 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
         private int HashFunc(object data, int size, int attemptNumber)
         {
             int key = (int)data;
-            string Hin = Convert.ToString(key + attemptNumber, 2).PadLeft(256, '0');
+            string Hin = Convert.ToString(key, 2).PadLeft(256, '0');
 
             string[] konstants = new string[]{
             "".PadLeft(256, '0'),
             "111111110000000011111111111111110000000000000000111111111111111100000000111111110000000000111111111111111111000000111111110000000011111111111111110000000111111111111111110000000111111111111111111110000111111110000000011111111111111111100000011111111111111111100000011111111111111111110000011111111111111111110000011111111111111111111111000000",
             "".PadLeft(256, '0')};
 
-            string U = Convert.ToString(key + attemptNumber, 2).PadLeft(256, '0');
-            string V = Convert.ToString(key + attemptNumber, 2).PadLeft(256, '0');
-            string W = Convert.ToString(key + attemptNumber, 2).PadLeft(256, '0');
+            string U = Convert.ToString(key, 2).PadLeft(256, '0');
+            string V = Convert.ToString(key, 2).PadLeft(256, '0');
+            string W = Convert.ToString(key, 2).PadLeft(256, '0');
 
             string[] keys = new string[4];
             keys[0] = FunctionP(W);
@@ -74,7 +74,7 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
             int indexBeforeNormalization = (int)(Convert.ToUInt32(resultParts.ToString().Substring(223, 32), 2));
             indexBeforeNormalization = indexBeforeNormalization%2==0 ? indexBeforeNormalization + 1 : indexBeforeNormalization;
             
-            return indexBeforeNormalization % size;
+            return (indexBeforeNormalization + attemptNumber) % size;
         }
 
         private string Encryption(string value, string key)
