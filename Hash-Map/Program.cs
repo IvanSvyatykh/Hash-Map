@@ -19,12 +19,12 @@ class Program
         hashDictionary.Add(11, 45);
         hashDictionary.Add(68, 45);
         hashDictionary.Add(67, 45);
-        hashDictionary.Add(234, 45);
+        hashDictionary.Add(12, 45);
         hashDictionary.Add(2353, 45);
 
 
 
-        OpenAdressHashMap<int, int> hashMapXor = new OpenAdressHashMap<int, int>(12, new GostHashForInt().GetHashFunc());
+        OpenAdressHashMap<int, int> hashMapXor = new OpenAdressHashMap<int, int>(15, new GostHashForInt().GetHashFunc());
 
         foreach (int i in hashDictionary.Keys)
         {

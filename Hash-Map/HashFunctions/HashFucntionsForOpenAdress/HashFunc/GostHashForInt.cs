@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Net.Sockets;
 using System.Security.Cryptography;
@@ -41,9 +42,9 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
             keys[0] = FunctionP(W);
             for (int i = 1; i < 4; i++)
             {
-                U = XorForStrings(FunctionA(U), konstants[i-1]);
+                U = XorForStringsWith256Length(FunctionA(U), konstants[i-1]);
                 V = FunctionA(FunctionA(V));
-                W = XorForStrings(U, V);
+                W = XorForStringsWith256Length(U, V);
                 keys[i] = FunctionP(W);
             }
 
@@ -55,20 +56,25 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
 
             string encValue = encValueParts.ToString();
 
+
             StringBuilder resultParts = new StringBuilder();
-            string lastPartOfResult="";
+            string lastPartOfResult= encValue.Substring(0, 16);
+            
             for (int i = 1; i < 16; i++)
             {
-                lastPartOfResult = XorForStrings(lastPartOfResult, encValue.Substring(16 * i - 1, 16));
+                lastPartOfResult = XorForStringsWith16Length(lastPartOfResult, encValue.Substring(16 * i - 1, 16));
             }
             resultParts.Append(lastPartOfResult);
 
-            for (int i = 15;i > 1;i--)
+            for (int i = 15;i > 0;i--)
             {
                 resultParts.Append(encValue.Substring(16 * i - 1, 16));
             }
-
-            return Convert.ToInt32(resultParts.ToString().Substring(224,32),2)%size;
+            
+            int indexBeforeNormalization = (int)(Convert.ToUInt32(resultParts.ToString().Substring(223, 32), 2));
+            indexBeforeNormalization = indexBeforeNormalization%2==0 ? indexBeforeNormalization + 1 : indexBeforeNormalization;
+            
+            return indexBeforeNormalization % size;
         }
 
         private string Encryption(string value, string key)
@@ -114,8 +120,11 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
             uint uintRes = Convert.ToUInt32(stringRes,16);
             return uintRes << 11;
         }
-
-        private string XorForStrings(string value1,string value2)
+        private string XorForStringsWith16Length(string value1, string value2)
+        {
+            return Convert.ToString(Convert.ToUInt16(value1, 2) ^ Convert.ToUInt16(value2, 2), 2).PadLeft(16, '0');
+        }
+        private string XorForStringsWith256Length(string value1,string value2)
         {
             StringBuilder result = new StringBuilder();
             for (int i = 7; i >= 0; i--)
