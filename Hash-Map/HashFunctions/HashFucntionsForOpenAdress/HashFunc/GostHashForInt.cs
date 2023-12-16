@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
 {
-    internal class XorHashForInt : IOpenAdressHashFunc
+    internal class GostHashForInt : IOpenAdressHashFunc
     {
         byte[,] S = new byte[8,16]{ // S-блоки, используемые ЦБ РФ
                         { 4, 10,  9,  2, 13,  8,  0, 14,  6, 11,  1, 12,  7, 15,  5,  3},
@@ -21,7 +21,7 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
                         { 1, 15, 13,  0,  5,  7, 10,  4,  9,  2,  3, 14,  6, 11,  8, 12}};
         public string GetName()
         {
-            return "Хэш функции с побитовым сдвигом и с побитовым логическим исключающим ИЛИ";
+            return "Хэш функции на основе ГОСТ Р 34.11-94";
         }
         private int HashFunc(object data, int size, int attemptNumber)
         {
@@ -54,7 +54,20 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
 
             string encValue = encValueParts.ToString();
 
-            
+            StringBuilder resultParts = new StringBuilder();
+            string lastPartOfResult="";
+            for (int i = 1; i < 16; i++)
+            {
+                lastPartOfResult = XorForStrings(lastPartOfResult, encValue.Substring(16 * i, 16));
+            }
+            resultParts.Append(lastPartOfResult);
+
+            for (int i = 15;i > 1;i--)
+            {
+                resultParts.Append(encValue.Substring(16 * i, 16));
+            }
+
+            return Convert.ToInt32(resultParts.ToString().Substring(224,32),2)%size;
         }
 
         private string Encryption(string value, string key)
@@ -103,7 +116,7 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
             StringBuilder result = new StringBuilder();
             for (int i = 3; i >= 0; i--)
             {
-                result.Append((Convert.ToInt64(value1.Substring(i*64, 64)) ^ Convert.ToInt64(value2.Substring(i*64, 64))).ToString());
+                result.Append((Convert.ToInt64(value1.Substring(i*64, 64),2) ^ Convert.ToInt64(value2.Substring(i*64, 64),2)).ToString());
             }
            
             return result.ToString();
