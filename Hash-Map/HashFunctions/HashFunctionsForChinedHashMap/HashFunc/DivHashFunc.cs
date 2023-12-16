@@ -27,21 +27,7 @@ namespace Hash_Map.HashFunctions.HashFunctionsForChinedHashMap.HashFunc
 
             int sum = list.Sum(x => x);
 
-            if (size < 128)
-            {
-                sum = sum << list[127 % size];
-                sum *= 127 % size;
-            }
-            else
-            {
-                sum = sum << list[size % 127];
-                sum *= size % 127;
-            }
-            if (sum > size)
-            {
-                return (sum / size) % size;
-            }
-            return (size / sum) % sum;
+            return sum % size;
         }
 
         public Func<object, int, int> GetHashFunc()

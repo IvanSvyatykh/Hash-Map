@@ -7,24 +7,20 @@ using System.Threading.Tasks;
 
 namespace Hash_Map.HashFunctions.HashFunctionsForChinedHashMap.HashFunc
 {
-    public class BitMovemeHashFunc : IChinedHashFunc
+    public class MyXOR : IChinedHashFunc
     {
-        public string GetName() => "Хеш-функция на основе битовых операциях.";
+        public string GetName() => "Хеш-функция на основе XOR.";
 
         private int Start(object data, int size)
         {
             byte[] hash = ObjectToByteArray(data);
-            List<byte> list = new List<byte>(hash);          
+            List<byte> list = new List<byte>(hash);
 
+            int res = list.Sum(b => b);
+            int x = res ^ size;
 
-            long res = int.MaxValue;
-            for (int i = 0; i < list.Count; i++)
-            {
-                res ^= ((res << 5) + list[i] + (res >> 2));
-            }
+            return x % size;
 
-            res = Math.Abs(res);
-            return (int)(res % size);
         }
 
         public Func<object, int, int> GetHashFunc()
@@ -41,8 +37,5 @@ namespace Hash_Map.HashFunctions.HashFunctionsForChinedHashMap.HashFunc
                 return ms.ToArray();
             }
         }
-
-       
-        
     }
 }
