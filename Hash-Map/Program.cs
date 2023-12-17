@@ -14,46 +14,44 @@ class Program
     private static int HashTableSize = 0;
     public static void Main()
     {
-        IHashMap<int, int> hashMap;
-        Dictionary<int, int> hashDictionary = new Dictionary<int, int>();
-        hashDictionary.Add(11, 45);
-        hashDictionary.Add(68, 45);
-        hashDictionary.Add(67, 45);
-        hashDictionary.Add(12, 45);
-        hashDictionary.Add(2353, 45);
-        hashDictionary.Add(2352, 45);
-        hashDictionary.Add(2354, 45);
+        //IHashMap<int, int> hashMap;
+        //Dictionary<int, int> hashDictionary = new Dictionary<int, int>();
+        //hashDictionary.Add(25, 45);
+        //hashDictionary.Add(78, 45);
+        //hashDictionary.Add(32, 45);
+        //hashDictionary.Add(33, 45);
+        //hashDictionary.Add(11, 45);
 
-        OpenAdressHashMap<int, int> hashMapXor = new OpenAdressHashMap<int, int>(15, new GostHashForInt().GetHashFunc());
+        //OpenAdressHashMap<int, int> hashMapXor = new OpenAdressHashMap<int, int>(12, new GostHashForInt().GetHashFunc());
 
-        foreach (int i in hashDictionary.Keys)
+        //foreach (int i in hashDictionary.Keys)
+        //{
+
+        //    hashMapXor.Add(i, hashDictionary[i]);
+        //}
+
+
+        //Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
+        //hashMapXor.Print();
+        //Console.WriteLine();
+        //Console.WriteLine("Длина самого длинного кластера равна: " + hashMapXor.GetLongestClusterLength());
+        //Console.WriteLine();
+
+
+        Console.WriteLine("Здравствуйте, вас приветствует Консольное приложение, для работы с Хэш-таблицами\n" +
+                          "С каким именно типом Хэш-таблиц вы бы хотели поработать?\n" +
+                          "Введите 1, если вы хотите поработать с Хэш-таблицой, использующей метод разрешения коллизий с помощью цепочек.\n" +
+                          "Введите что угодно кроме 1, если вы хотите поработать с Хэш-таблицой, использующей метод открытой адресации для разрешения коллизий.");
+
+        string typeFlag = Console.ReadLine();
+        if (typeFlag == "1")
         {
-
-            hashMapXor.Add(i, hashDictionary[i]);
+            WorkWithChainesTable();
         }
-
-
-        Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
-        hashMapXor.Print();
-        Console.WriteLine();
-        Console.WriteLine("Длина самого длинного кластера равна: " + hashMapXor.GetLongestClusterLength());
-        Console.WriteLine();
-
-
-        //Console.WriteLine("Здравствуйте, вас приветствует Консольное приложение, для работы с Хэш-таблицами\n" +
-        //                  "С каким именно типом Хэш-таблиц вы бы хотели поработать?\n" +
-        //                  "Введите 1, если вы хотите поработать с Хэш-таблицой, использующей метод разрешения коллизий с помощью цепочек.\n" +
-        //                  "Введите что угодно кроме 1, если вы хотите поработать с Хэш-таблицой, использующей метод открытой адресации для разрешения коллизий.");
-
-        //string typeFlag = Console.ReadLine();
-        //if (typeFlag == "1")
-        //{
-        //    WorkWithChainesTable();
-        //}
-        //else
-        //{
-        //    WorkWithOpenAdressTable();
-        //}
+        else
+        {
+            WorkWithOpenAdressTable();
+        }
     }
 
     private static void WorkWithChainesTable()

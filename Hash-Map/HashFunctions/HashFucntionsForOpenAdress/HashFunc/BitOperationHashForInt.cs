@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
 {
-    internal class CircularShiftHashForInt : IOpenAdressHashFunc
+    internal class BitOperationHashForInt : IOpenAdressHashFunc
     {
         public string GetName()
         {
