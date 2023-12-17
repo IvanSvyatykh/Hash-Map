@@ -14,7 +14,31 @@ class Program
     private static int HashTableSize = 0;
     public static void Main()
     {
-        
+        //IHashMap<int, int> hashMap;
+        //Dictionary<int, int> hashDictionary = new Dictionary<int, int>();
+        //hashDictionary.Add(11, 45);
+        //hashDictionary.Add(68, 45);
+        //hashDictionary.Add(67, 45);
+        //hashDictionary.Add(12, 45);
+        //hashDictionary.Add(2353, 45);
+
+
+
+        //OpenAdressHashMap<int, int> hashMapXor = new OpenAdressHashMap<int, int>(15, new GostHashForInt().GetHashFunc());
+
+        //foreach (int i in hashDictionary.Keys)
+        //{
+
+        //    hashMapXor.Add(i, hashDictionary[i]);
+        //}
+
+
+        //Console.WriteLine("Вот как выглядит текущее состояние Хэш-таблицы:");
+        //hashMapXor.Print();
+        //Console.WriteLine();
+        //Console.WriteLine("Длина самого длинного кластера равна: " + hashMapXor.GetLongestClusterLength());
+        //Console.WriteLine();
+
 
         Console.WriteLine("Здравствуйте, вас приветствует Консольное приложение, для работы с Хэш-таблицами\n" +
                           "С каким именно типом Хэш-таблиц вы бы хотели поработать?\n" +
