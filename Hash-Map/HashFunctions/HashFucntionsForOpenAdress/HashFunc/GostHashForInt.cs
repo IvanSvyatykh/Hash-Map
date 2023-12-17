@@ -28,7 +28,7 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
         {
             int key = (int)data;
             string Hin = Convert.ToString(key, 2).PadLeft(256, '0');
-
+            
             string[] konstants = new string[]{
             "".PadLeft(256, '0'),
             "111111110000000011111111111111110000000000000000111111111111111100000000111111110000000000111111111111111111000000111111110000000011111111111111110000000111111111111111110000000111111111111111111110000111111110000000011111111111111111100000011111111111111111100000011111111111111111110000011111111111111111110000011111111111111111111111000000",
@@ -42,39 +42,56 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
             keys[0] = FunctionP(W);
             for (int i = 1; i < 4; i++)
             {
-                U = XorForStringsWith256Length(FunctionA(U), konstants[i-1]);
+                U = XorForStringsWith256Length(FunctionA(U), konstants[i - 1]);
                 V = FunctionA(FunctionA(V));
                 W = XorForStringsWith256Length(U, V);
                 keys[i] = FunctionP(W);
             }
 
             StringBuilder encValueParts = new StringBuilder();
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 4; i++)
+            {
                 int k = i != 0 ? 1 : 0;
                 encValueParts.Append(Encryption(Hin.Substring(64 * i - k, 64), keys[i]));
             }
 
             string encValue = encValueParts.ToString();
-
-
-            StringBuilder resultParts = new StringBuilder();
-            string lastPartOfResult= encValue.Substring(0, 16);
             
+            StringBuilder resultParts = PsiFunction(encValue);
+            //for (int i = 0; i < 12; i++)
+            //{
+            //    resultParts = PsiFunction(resultParts.ToString());
+            //}
+            //resultParts = new StringBuilder(XorForStringsWith256Length(Hin, resultParts.ToString()));
+
+            //for (int i = 0; i < 61; i++)
+            //{
+            //    resultParts = PsiFunction(resultParts.ToString());
+            //}
+
+            int indexBeforeNormalization = (int)(Convert.ToUInt32(resultParts.ToString().Substring(223, 32), 2)% 2147483648);
+            indexBeforeNormalization = indexBeforeNormalization % 2 == 0 ? indexBeforeNormalization + 1 : indexBeforeNormalization;
+
+            return (indexBeforeNormalization + attemptNumber) % size;
+        }
+
+        private StringBuilder PsiFunction(string encValue)
+        {
+            StringBuilder resultParts = new StringBuilder();
+            string lastPartOfResult = encValue.Substring(0, 16);
+
             for (int i = 1; i < 16; i++)
             {
                 lastPartOfResult = XorForStringsWith16Length(lastPartOfResult, encValue.Substring(16 * i - 1, 16));
             }
             resultParts.Append(lastPartOfResult);
 
-            for (int i = 15;i > 0;i--)
+            for (int i = 15; i > 0; i--)
             {
                 resultParts.Append(encValue.Substring(16 * i - 1, 16));
             }
-            
-            int indexBeforeNormalization = (int)(Convert.ToUInt32(resultParts.ToString().Substring(223, 32), 2));
-            indexBeforeNormalization = indexBeforeNormalization%2==0 ? indexBeforeNormalization + 1 : indexBeforeNormalization;
-            
-            return (indexBeforeNormalization + attemptNumber) % size;
+
+            return resultParts;
         }
 
         private string Encryption(string value, string key)
