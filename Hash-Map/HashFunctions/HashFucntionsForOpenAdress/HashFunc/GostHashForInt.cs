@@ -11,7 +11,11 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
 {
     internal class GostHashForInt : IOpenAdressHashFunc
     {
-        byte[,] S = new byte[8,16]{ // S-блоки, используемые ЦБ РФ
+        public string GetName()
+        {
+            return "Хэш функции на основе ГОСТ Р 34.11-94";
+        }
+        private byte[,] cypher = new byte[8, 16]{ // S-блоки, используемые ЦБ РФ
                         { 4, 10,  9,  2, 13,  8,  0, 14,  6, 11,  1, 12,  7, 15,  5,  3},
                         {14, 11,  4, 12,  6, 13, 15, 10,  2,  3,  8,  1,  0,  7,  5,  9},
                         { 5,  8,  1, 13, 10,  3,  4,  2, 14, 15, 12,  7,  6,  0,  9, 11},
@@ -20,16 +24,12 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
                         { 4, 11, 10,  0,  7,  2,  1, 13,  3,  6,  8,  5,  9, 12, 15, 14},
                         {13, 11,  4,  1,  3, 15,  5,  9,  0, 10, 14,  7,  6,  8,  2, 12},
                         { 1, 15, 13,  0,  5,  7, 10,  4,  9,  2,  3, 14,  6, 11,  8, 12}};
-        public string GetName()
-        {
-            return "Хэш функции на основе ГОСТ Р 34.11-94";
-        }
         private int HashFunc(object data, int size, int attemptNumber)
         {
             int key = (int)data;
             string Hin = Convert.ToString(key, 2).PadLeft(256, '0');
             
-            string[] konstants = new string[]{
+            string[] constants = new string[]{
             "".PadLeft(256, '0'),
             "111111110000000011111111111111110000000000000000111111111111111100000000111111110000000000111111111111111111000000111111110000000011111111111111110000000111111111111111110000000111111111111111111110000111111110000000011111111111111111100000011111111111111111100000011111111111111111110000011111111111111111110000011111111111111111111111000000",
             "".PadLeft(256, '0')};
@@ -42,7 +42,7 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
             keys[0] = FunctionP(W);
             for (int i = 1; i < 4; i++)
             {
-                U = XorForStringsWith256Length(FunctionA(U), konstants[i - 1]);
+                U = XorForStringsWith256Length(FunctionA(U), constants[i - 1]);
                 V = FunctionA(FunctionA(V));
                 W = XorForStringsWith256Length(U, V);
                 keys[i] = FunctionP(W);
@@ -58,6 +58,11 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
             string encValue = encValueParts.ToString();
             
             StringBuilder resultParts = PsiFunction(encValue);
+
+            int indexBeforeNormalization = (int)(Convert.ToUInt32(resultParts.ToString().Substring(223, 32), 2) % 2147483648);
+            indexBeforeNormalization = indexBeforeNormalization % 2 == 0 ? indexBeforeNormalization + 1 : indexBeforeNormalization;
+
+            return (indexBeforeNormalization + attemptNumber) % size;
             //for (int i = 0; i < 12; i++)
             //{
             //    resultParts = PsiFunction(resultParts.ToString());
@@ -69,10 +74,10 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
             //    resultParts = PsiFunction(resultParts.ToString());
             //}
 
-            int indexBeforeNormalization = (int)(Convert.ToUInt32(resultParts.ToString().Substring(223, 32), 2)% 2147483648);
-            indexBeforeNormalization = indexBeforeNormalization % 2 == 0 ? indexBeforeNormalization + 1 : indexBeforeNormalization;
+            //int indexBeforeNormalization = (int)(Convert.ToUInt32(resultParts.ToString().Substring(223, 32), 2)% 2147483648);
+            //indexBeforeNormalization = indexBeforeNormalization % 2 == 0 ? indexBeforeNormalization + 1 : indexBeforeNormalization;
 
-            return (indexBeforeNormalization + attemptNumber) % size;
+            //return (indexBeforeNormalization + attemptNumber) % size;
         }
 
         private StringBuilder PsiFunction(string encValue)
@@ -131,7 +136,7 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
             StringBuilder result = new StringBuilder();
             for(int i = 0; i < 8; i++)
             {   
-                result.Append(Convert.ToString(S[i, Convert.ToUInt32(bitValue[i].ToString(), 16)],16));
+                result.Append(Convert.ToString(cypher[i, Convert.ToUInt32(bitValue[i].ToString(), 16)],16));
             }
             string stringRes = result.ToString();
             uint uintRes = Convert.ToUInt32(stringRes,16);
@@ -169,10 +174,10 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
         }
         private int FIFunction(int arg)
         { 
-            int i = arg & 0x03;//получаем число от 0 до 3
-            int k = arg >> 2;//получаем число от 0 до 7
-            k++;//преобразуем k в число от 1 до 8
-            return (i << 3) + k; // умножили i на 8 и добавили k 
+            int i = arg & 0x03;
+            int k = arg >> 2;
+            k++;
+            return (i << 3) + k;
         }
         public Func<object, int, int, int> GetHashFunc()
         {

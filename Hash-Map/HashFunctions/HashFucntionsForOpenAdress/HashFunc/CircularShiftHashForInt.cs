@@ -11,7 +11,7 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
     {
         public string GetName()
         {
-            return "Хэш функции с побитовыми сдвигами и с побитовыми логическими исключающими ИЛИ";
+            return "Хэш функции с побитовыми операциями";
         }
         private int HashFunc(object data, int size, int attemptNumber)
         {
