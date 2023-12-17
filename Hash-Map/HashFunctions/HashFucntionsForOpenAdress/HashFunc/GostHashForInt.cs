@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
-using System.Linq;
-using System.Net.Sockets;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
 {
@@ -15,7 +8,7 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
         {
             return "Хэш функции на основе ГОСТ Р 34.11-94";
         }
-        private byte[,] cypher = new byte[8, 16]{ // S-блоки, используемые ЦБ РФ
+        private byte[,] cypher = new byte[8, 16]{ 
                         { 4, 10,  9,  2, 13,  8,  0, 14,  6, 11,  1, 12,  7, 15,  5,  3},
                         {14, 11,  4, 12,  6, 13, 15, 10,  2,  3,  8,  1,  0,  7,  5,  9},
                         { 5,  8,  1, 13, 10,  3,  4,  2, 14, 15, 12,  7,  6,  0,  9, 11},
@@ -63,6 +56,7 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
             indexBeforeNormalization = indexBeforeNormalization % 2 == 0 ? indexBeforeNormalization + 1 : indexBeforeNormalization;
 
             return (indexBeforeNormalization + attemptNumber) % size;
+            
             //for (int i = 0; i < 12; i++)
             //{
             //    resultParts = PsiFunction(resultParts.ToString());
@@ -104,7 +98,7 @@ namespace Hash_Map.HashFunctions.HashFucntionsForOpenAdress.HashFunc
             char[] firstPart = value.Substring(0,32).ToCharArray();
             char[] secondPart = value.Substring(31, 32).ToCharArray();
 
-            for (int step = 0; step < 3; step++) {       // K1..K24 идут в прямом порядке - три цикла K1..K8
+            for (int step = 0; step < 3; step++) {       
                 for (int j = 0; j < 8; j += 1)
                 {
                     char[] temp = new char[32];
