@@ -145,6 +145,7 @@ namespace Hash_Map.DataStructs.ChainedHashMap
     public class Node<K, V>
     {
         public V Value { get; set; }
+        public V RealKey {  get; set; }
         public Node<K, V> Next { get; set; }
         public K Key { get; private set; }
 

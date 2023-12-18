@@ -244,20 +244,18 @@ namespace Hash_Map.HashFunctions.HashFunctionsForChinedHashMap.HashFunc
 
         public static byte[] HashFile(object fs)
         {
-
             using (SHA256 sha256 = SHA256.Create())
             {
                 byte[] hashBytes = sha256.ComputeHash(ObjectToByteArray(fs));
 
                 return hashBytes;
-            }
-
-           
+            }           
         }
 
         private static int Start(object data, int size)
         {
-            int a = Math.Abs(BitConverter.ToInt32(HashFile(data).ToArray()) % size);
+            long b = BitConverter.ToInt32(HashFile(data).ToArray());
+            int a = (int)Math.Abs(b % size);
 
             return a ;
         }
