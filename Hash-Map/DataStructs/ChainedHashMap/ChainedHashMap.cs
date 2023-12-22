@@ -107,12 +107,7 @@ namespace Hash_Map.DataStructs.ChainedHashMap
                     bool count = true;
                     foreach (var e in el)
                     {
-                        if (count)
-                        {
-                            Console.Write(e.Key + ": ");
-                            count = false;
-                        }
-                        Console.Write($"{e.Value}->");
+                        Console.Write($"({e.Key};{e.Value})->");
                     }
                 }
                 else
@@ -121,6 +116,8 @@ namespace Hash_Map.DataStructs.ChainedHashMap
                 }
                 Console.WriteLine();
             }
+
+            Console.WriteLine($"Длина макисмальной цепочки:{GetLongestChain()}");
         }
 
     }
