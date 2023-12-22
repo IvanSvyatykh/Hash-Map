@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,19 +12,23 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
     {
         public int Size { get; private set; }
 
+        private bool IsExceptionNeed;
+
         private Func<object, int, int, int> hashFunc;
 
         private KeyAndValue<TKey, TValue>[] hashMapValues;
-        public OpenAdressHashMap(int size, Func<object, int, int, int> hashFunc)
+        public OpenAdressHashMap(int size, Func<object, int, int, int> hashFunc, bool isExceptionNeed)
         {
             Size = size;
             this.hashFunc = hashFunc;
             hashMapValues = new KeyAndValue<TKey, TValue>[size];
+            IsExceptionNeed = isExceptionNeed;
         }
 
         public void Add(TKey key, TValue value)
         {
-            for (int attemptNumber = 0; attemptNumber < Size; attemptNumber++)
+            int attemptNumber = 0;
+            for (; attemptNumber < Size; attemptNumber++)
             {
                 int index = hashFunc(key, Size, attemptNumber);
                 if (hashMapValues[index] is null)
@@ -36,7 +41,28 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
                     throw new InvalidOperationException("В таблице уже существует пара с таким ключём");
                 }
             }
-            throw new InvalidOperationException("Cлучилось переполнение хэш таблицы.");
+
+            if (IsExceptionNeed)
+            {
+                throw new InvalidOperationException("Cлучилось переполнение хэш таблицы.");
+            }
+
+            IncreaseTableSize();
+            Add(key, value);
+        }
+
+        private void IncreaseTableSize()
+        {
+            Size = Size * 2;
+            KeyAndValue<TKey, TValue>[] oldHashMapValues = hashMapValues.ToArray();
+            hashMapValues = new KeyAndValue<TKey, TValue>[Size];
+            for (int i = 0; i < Size / 2; i++)
+            {
+                if (oldHashMapValues[i] is not null)
+                {
+                    Add(oldHashMapValues[i].GetKey(), oldHashMapValues[i].GetValue());
+                }
+            }
         }
 
         public void Remove(TKey key)
