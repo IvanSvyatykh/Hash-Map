@@ -56,11 +56,11 @@ namespace Hash_Map.DataStructs.OpenAdressHashMap
             Size = Size * 2;
             KeyAndValue<TKey, TValue>[] oldHashMapValues = hashMapValues.ToArray();
             hashMapValues = new KeyAndValue<TKey, TValue>[Size];
-            for (int i = 0; i < Size / 2; i++)
+            foreach (KeyAndValue<TKey, TValue> pair in oldHashMapValues)
             {
-                if (oldHashMapValues[i] is not null)
+                if (pair is not null)
                 {
-                    Add(oldHashMapValues[i].GetKey(), oldHashMapValues[i].GetValue());
+                    Add(pair.GetKey(), pair.GetValue());
                 }
             }
         }
