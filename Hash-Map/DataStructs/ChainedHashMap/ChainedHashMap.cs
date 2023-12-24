@@ -28,7 +28,7 @@ namespace Hash_Map.DataStructs.ChainedHashMap
 
         }
 
-        public void Get(TKey key)
+        public TValue Get(TKey key)
         {
             int hash = _hashFunc(key, Size);
             Node<TKey, TValue> node = null;
@@ -36,12 +36,11 @@ namespace Hash_Map.DataStructs.ChainedHashMap
             if (_values[hash].Count != 0)
             {
                 MyLinkedList<TKey, TValue> nodes = _values[hash];
-                node = nodes.Get(key);
+                return nodes.Get(key).Value;
             }
-            if (node == null)
-            {
-                throw new ArgumentException($"Hash-Map does not contains element with given key {key.ToString()}");
-            }
+
+            throw new ArgumentException($"Hash-Map does not contains element with given key {key.ToString()}");
+
         }
 
         public void Add(TKey key, TValue value)
@@ -120,5 +119,9 @@ namespace Hash_Map.DataStructs.ChainedHashMap
             Console.WriteLine($"Длина макисмальной цепочки:{GetLongestChain()}");
         }
 
+        void IHashMap<TKey, TValue>.Get(TKey key)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

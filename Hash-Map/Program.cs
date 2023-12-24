@@ -180,7 +180,8 @@ class Program
 
             if (int.TryParse(stringKey, out int key))
             {
-                openAdressHashMap.Get(key);
+
+                Console.WriteLine($"Значение по ключу:{stringKey} -> {openAdressHashMap.Get(key)}");
                 return;
             }
             else
