@@ -252,6 +252,9 @@ class Program
                 }
                 Console.WriteLine("Хорошо, тогда вот итоговая таблица:");
                 openAdressHashMap.Print();
+   
+                Console.WriteLine("Длина самого длинного кластера равна: " + openAdressHashMap.GetLongestClusterLength());
+                Console.WriteLine();
 
                 Console.WriteLine("На этом работа с программой завершена, теперь вы можете только перезапустить её");
             }
@@ -440,7 +443,17 @@ class Program
 
                 if (isUserChoseThisHashFunc == "1")
                 {
-                    return new OpenAdressHashMap<int, int>(HashTableSize, hashFucnObj.GetHashFunc());
+                    Console.WriteLine("Как именно вы хотите,чтобы обрабатывалось переполнение Хеш-таблицы?" + "\n"+
+                                      "Введите 1 если вы хотите, чтобы вылетала ошибка, и что угодно кроме 1, если вы хотите, чтобы размер таблицы увеличивался");
+                    string isUserWantToHaveExeption = Console.ReadLine();
+                    if (isUserWantToHaveExeption == "1")
+                    {
+                        return new OpenAdressHashMap<int, int>(HashTableSize, hashFucnObj.GetHashFunc(),true);
+                    }
+                    else
+                    {
+                        return new OpenAdressHashMap<int, int>(HashTableSize, hashFucnObj.GetHashFunc(), false);
+                    }
                 }
             }
             Console.WriteLine("Это были все варианты хэш-функций, вы должны выбрать хоть один из них, попробуйте ещё раз");
